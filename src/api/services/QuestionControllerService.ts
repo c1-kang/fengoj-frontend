@@ -8,8 +8,8 @@ import type { BaseResponse_Page_Question_ } from '../models/BaseResponse_Page_Qu
 import type { BaseResponse_Page_QuestionSubmitVO_ } from '../models/BaseResponse_Page_QuestionSubmitVO_';
 import type { BaseResponse_Page_QuestionVO_ } from '../models/BaseResponse_Page_QuestionVO_';
 import type { BaseResponse_Question_ } from '../models/BaseResponse_Question_';
-import type { BaseResponse_QuestionSubmit_ } from '../models/BaseResponse_QuestionSubmit_';
 import type { BaseResponse_QuestionSubmitTestResponse_ } from '../models/BaseResponse_QuestionSubmitTestResponse_';
+import type { BaseResponse_QuestionSubmitVO_ } from '../models/BaseResponse_QuestionSubmitVO_';
 import type { BaseResponse_QuestionVO_ } from '../models/BaseResponse_QuestionVO_';
 import type { DeleteRequest } from '../models/DeleteRequest';
 import type { QuestionAddRequest } from '../models/QuestionAddRequest';
@@ -217,12 +217,12 @@ export class QuestionControllerService {
     /**
      * getSubmitById
      * @param submitId submitId
-     * @returns BaseResponse_QuestionSubmit_ OK
+     * @returns BaseResponse_QuestionSubmitVO_ OK
      * @throws ApiError
      */
     public static getSubmitByIdUsingGet(
         submitId: string,
-    ): CancelablePromise<BaseResponse_QuestionSubmit_> {
+    ): CancelablePromise<BaseResponse_QuestionSubmitVO_> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/question/question_submit/get',

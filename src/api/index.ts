@@ -16,8 +16,8 @@ export type { BaseResponse_Page_QuestionVO_ } from './models/BaseResponse_Page_Q
 export type { BaseResponse_Page_User_ } from './models/BaseResponse_Page_User_';
 export type { BaseResponse_Page_UserVO_ } from './models/BaseResponse_Page_UserVO_';
 export type { BaseResponse_Question_ } from './models/BaseResponse_Question_';
-export type { BaseResponse_QuestionSubmit_ } from './models/BaseResponse_QuestionSubmit_';
 export type { BaseResponse_QuestionSubmitTestResponse_ } from './models/BaseResponse_QuestionSubmitTestResponse_';
+export type { BaseResponse_QuestionSubmitVO_ } from './models/BaseResponse_QuestionSubmitVO_';
 export type { BaseResponse_QuestionVO_ } from './models/BaseResponse_QuestionVO_';
 export type { BaseResponse_string_ } from './models/BaseResponse_string_';
 export type { BaseResponse_User_ } from './models/BaseResponse_User_';
@@ -39,7 +39,6 @@ export type { QuestionContent } from './models/QuestionContent';
 export type { QuestionEditRequest } from './models/QuestionEditRequest';
 export type { QuestionQueryRequest } from './models/QuestionQueryRequest';
 export type { QuestionQuerySubmitRequest } from './models/QuestionQuerySubmitRequest';
-export type { QuestionSubmit } from './models/QuestionSubmit';
 export type { QuestionSubmitAddRequest } from './models/QuestionSubmitAddRequest';
 export type { QuestionSubmitTestRequest } from './models/QuestionSubmitTestRequest';
 export type { QuestionSubmitTestResponse } from './models/QuestionSubmitTestResponse';

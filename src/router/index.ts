@@ -93,6 +93,11 @@ const add: Array<RouteItem> = [
         component: () => import("@/views/front/doQuestion.vue"),
       },
       {
+        path: "/view/code/:id",
+        meta: { title: "查看代码" },
+        component: () => import("@/views/front/view-code.vue"),
+      },
+      {
         path: "/cmp",
         meta: { title: "比赛" },
         component: () => import("@/views/front/competition.vue"),

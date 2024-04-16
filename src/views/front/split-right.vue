@@ -51,18 +51,17 @@
           </div>
         </a-tab-pane>
         <a-tab-pane key="3" title="切换视图"> </a-tab-pane>
-        <a-tab-pane key="4" title="提交代码"> </a-tab-pane>
+        <a-tab-pane key="4" title="提交代码">
+          <p>答案正确</p>
+          <p>运行时间：{{ queryResultForm.time }} ms</p>
+          <p>内存消耗：{{ queryResultForm.memory }} KB</p>
+        </a-tab-pane>
       </a-tabs>
     </div>
   </div>
 </template>
 
 <style scoped>
-/* .footer {
-  display: flex;
-  justify-content: flex-start; 
-  align-items: center;
-} */
 .textarea {
   height: 21vh;
   border: 1px solid #d0d0d5;
@@ -103,6 +102,7 @@ import * as themes from "./vue-codemirror/themes";
 import { CaretRight16Regular } from "@vicons/fluent";
 import { QuestionControllerService } from "@/api";
 import emitter from "@/utils/emitter";
+import { message } from "@/utils/message";
 
 export default defineComponent({
   components: {
@@ -168,7 +168,6 @@ export default defineComponent({
         testForm.value
       );
       if (resp.code === 0) {
-        console.log(resp.data);
         testResult.value = resp.data;
       }
     };
@@ -186,7 +185,9 @@ export default defineComponent({
 
     // 查询提交结果表单
     const queryResultForm = ref({
-      judgeInfo: "",
+      status: "",
+      memory: 0,
+      time: 0,
     });
 
     // 查询提交结果
@@ -195,9 +196,9 @@ export default defineComponent({
         submitId
       );
       if (resp.code === 0) {
-        console.log("查询成功：" + JSON.stringify(resp.data.judgeInfo));
+        queryResultForm.value = resp.data.judgeInfo;
       } else {
-        alert("查询失败：" + resp.message);
+        message.error("查询失败：" + resp.message);
       }
     };
 
@@ -214,7 +215,7 @@ export default defineComponent({
         await new Promise((resolve) => setTimeout(resolve, 2000));
         queryResult(submitId);
       } else {
-        alert("提交失败：" + resp.message);
+        message.error("提交失败：" + resp.message);
       }
     };
 
@@ -277,7 +278,6 @@ export default defineComponent({
     onMounted(() => {
       // 监听代码改变事件
       emitter.on("code_change", (value) => {
-        // console.log(value);
         submitForm.value.code = value;
         testForm.value.code = value;
       });
@@ -307,6 +307,7 @@ export default defineComponent({
       tab_click,
       testForm,
       testResult,
+      queryResultForm,
     };
   },
 });

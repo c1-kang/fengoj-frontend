@@ -2,7 +2,6 @@
 import splitRight from "./split-right.vue";
 import splitLeft from "./split-left.vue";
 import { ref } from "vue";
-import emitter from "@/utils/emitter";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
