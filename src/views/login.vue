@@ -1,0 +1,216 @@
+<template>
+  <div class="login-page">
+    <div class="content">
+      <div class="title">
+        <span>{{ info.name }}</span>
+      </div>
+      <div class="form-box">
+        <div class="login-form">
+          <div class="login-title">平台登录</div>
+          <input class="the-input mgb_20" type="text" v-model="formData.userAccount" placeholder="请输入账号">
+          <input class="the-input mgb_20" type="userPassword" v-model="formData.userPassword" placeholder="请输入密码">
+          <button class="the-btn blue mgb_20" v-ripple style="width: 100%" @click="onLogin(false)"
+            :disabled="loading">{{ loading ? '登录中...' : '登录' }}</button>
+          <label class="check-box fvertical mgb_20" for="check-input" @change="remember = !remember">
+            <input type="checkbox" id="check-input" :checked="remember" />
+            记住账号/密码
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts" setup>
+import { reactive, ref } from "vue";
+import store from "@/store";
+import { UserControllerService } from "@/api";
+import { openNextPage } from "@/router/permission";
+import { modifyData } from "@/utils";
+import { message } from "@/utils/message";
+import { UserInfo } from "../types/user";
+
+const cacheName = "login-info";
+
+const info = store.projectInfo;
+
+/** 表单数据 */
+const formData = reactive({
+  userAccount: "chanchan",
+  userPassword: "12345678"
+})
+
+/** 返回结果 */
+const respData: UserInfo = reactive({
+  id: 0,
+  userName: "",
+  userRole: "",
+  userAvatar: "",
+})
+
+const loading = ref(false);
+
+/** 
+ * 点击登录 
+ * @param adopt 是否不校验直接通过
+ */
+function onLogin(adopt: boolean) {
+  async function start() {
+    loading.value = true;
+    const res = await UserControllerService.userLoginUsingPost(formData)
+    loading.value = false;
+    if (res.code === 0) {
+      respData.id = res.data.id;
+      respData.userName = res.data.userName;
+      respData.userRole = res.data.userRole;
+      respData.userAvatar = res.data.userAvatar;
+      saveLoginInfo();
+      openNextPage();
+      store.user.update(respData)
+
+    } else {
+      message.error(res.msg);
+    }
+  }
+  if (adopt) {
+    return start();
+  }
+  if (!formData.userAccount) {
+    return message.error("请输入账号");
+  }
+  if (!formData.userPassword) {
+    return message.error("请输入密码");
+  }
+  start();
+}
+
+/** 是否记住密码 */
+const remember = ref(false);
+
+function saveLoginInfo() {
+  if (remember.value) {
+    localStorage.setItem(cacheName, JSON.stringify({ remember: true, ...respData }));
+  } else {
+    localStorage.removeItem(cacheName);
+  }
+}
+
+function getLoginInfo() {
+  const value = localStorage.getItem(cacheName);
+  if (value) {
+    try {
+      const info = JSON.parse(value);
+      remember.value = !!info.remember;
+      modifyData(respData, info);
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+}
+
+getLoginInfo();
+</script>
+
+<style lang="scss">
+.login-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #2253dc;
+  background-image: linear-gradient(45deg, #2253dc 0%, #4fb8f9 99%);
+  position: relative;
+  z-index: 1;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../assets/admin-login-bg.jpg");
+    // background-size: 100% auto;
+    background-size: cover;
+    background-position: center center;
+    z-index: 2;
+  }
+
+  .content {
+    position: absolute;
+    z-index: 3;
+    top: 50%;
+    // margin-top: -245px;
+    margin-top: -302px;
+    right: 10%;
+    width: 100%;
+    max-width: 480px;
+
+    .form-box {
+      background-color: #81c7fa;
+      border: solid 2px #3b9be5;
+      padding: 10px;
+      width: 100%;
+      margin-bottom: 40px;
+
+      .login-form {
+        background-color: #fff;
+        padding: 40px 40px 30px;
+      }
+
+      .login-title {
+        font-size: 22px;
+        line-height: 22px;
+        color: var(--blue);
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .el-checkbox {
+        color: #999;
+      }
+    }
+
+    .title {
+      text-align: center;
+      font-size: 28px;
+      color: #fff;
+      margin-bottom: 24px;
+      text-shadow: 4px 4px 4px #333;
+      // letter-spacing: 2px;
+      font-family: "宋体";
+
+      span {
+        line-height: 1;
+      }
+    }
+
+    .bottom-text {
+      width: 100%;
+      max-width: 500px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 400;
+      line-height: 22px;
+      margin: 0 auto;
+      text-align: center;
+    }
+  }
+
+  .tips {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 8px;
+
+    .tips_text {
+      margin: 0 16px;
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .login-page {
+    .content {
+      right: 0;
+    }
+  }
+}
+</style>

@@ -1,0 +1,208 @@
+@import "./variables.scss";
+@import "./mixins.scss";
+@import "./common.scss";
+@import "./ripple.scss";
+
+/* 上下左右边距 */
+@for $index from 1 through 5 {
+  .mgl_#{$index}0 {
+    margin-left: 10px * $index;
+  }
+  .mgr_#{$index}0 {
+    margin-right: 10px * $index;
+  }
+  .mgt_#{$index}0 {
+    margin-top: 10px * $index;
+  }
+  .mgb_#{$index}0 {
+    margin-bottom: 10px * $index;
+  }
+  .pdl_#{$index}0 {
+    padding-left: 10px * $index;
+  }
+  .pdr_#{$index}0 {
+    padding-right: 10px * $index;
+  }
+  .pdt_#{$index}0 {
+    padding-top: 10px * $index;
+  }
+  .pdb_#{$index}0 {
+    padding-bottom: 10px * $index;
+  }
+}
+
+// ===================== 全局动画 =====================
+// 渐变+平移
+.fadeSlideX-leave-active, .fadeSlideX-enter-active {
+  transition: .4s all;
+}
+
+.fadeSlideX-enter-active, .fadeSlideX-leave-active {
+  opacity: 1;
+  transform: translate3d(0px, 0, 0);
+}
+
+.fadeSlideX-enter-from {
+  opacity: 0;
+  transform: translate3d(-30px, 0, 0);
+}
+
+.fadeSlideX-leave-to {
+  opacity: 0;
+  transform: translate3d(30px, 0, 0);
+}
+
+// 面包屑
+.breadcrumb-enter-active, .breadcrumb-leave-active {
+  transition: .4s all;
+}
+
+.breadcrumb-enter-from, .breadcrumb-leave-to {
+  opacity: 0;
+  transform: translate3d(20px, 0, 0);
+}
+
+.breadcrumb-leave-to {
+  position: absolute;
+}
+
+// 渐变
+.fade-enter-active, .fade-leave-active {
+  transition: var(--transition);
+}
+
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+
+// ================= 示例全局样式 =================
+
+.the-input {
+  width: 100%;
+  border: 1px solid #DCDFE6;
+  border-radius: var(--border-radius);
+  color: #1f2d3d;
+  height: 38px;
+  line-height: 38px;
+  font-size: 14px;
+  padding: 0 15px;
+  outline: none;
+  transition: 0.2s all;
+  &:focus {
+    border-color: var(--blue);
+  }
+}
+
+.the-btn {
+  font-size: 14px;
+  padding: 0px 15px;
+  min-width: 88px;
+  height: 36px;
+  line-height: 1;
+  border-radius: var(--border-radius);
+  background-color: #fff;
+  color: rgba(0,0,0,.87);
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,0.2), 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12);
+  transition: var(--transition);
+  outline: none;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  &:active {
+    box-shadow: 0 5px 5px -3px rgba(0,0,0,0.2), 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12);
+  }
+  &:disabled {
+    cursor: no-drop;
+    opacity: 0.7;
+  }
+}
+
+.the-btn + .the-btn {
+  margin-left: 10px;
+}
+
+.the-btn.mini {
+  font-size: 12px;
+  height: 28px;
+  border-radius: var(--border-radius);
+}
+
+.the-btn.blue {
+  background-color: var(--blue);
+  color: #fff;
+}
+
+.the-btn.green {
+  background-color: var(--green);
+  color: #fff;
+}
+
+.the-btn.yellow {
+  background-color: var(--yellow);
+  color: #fff;
+}
+
+.the-btn.red {
+  background-color: var(--red);
+  color: #fff;
+}
+
+.check-box {
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--blue);
+  input {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+    line-height: 1;
+    &:checked {
+      background-color: var(--blue);
+    }
+  }
+}
+
+.the-tag {
+  display: inline-block;
+  padding: 6px 8px;
+  border-radius: var(--border-radius);
+  line-height: 1;
+  font-size: 14px;
+}
+
+.the-tag + .the-tag {
+  margin-left: 10px;
+}
+
+.the-tag.green { @include tagColor(#e7faf0, var(--green)); }
+.the-tag.blue { @include tagColor(#e8f3ff, var(--blue)); }
+.the-tag.gray { @include tagColor(#efefef, var(--gray)); }
+.the-tag.red { @include tagColor(#ffeded, var(--red)); }
+.the-tag.orange { @include tagColor(#fff7e6, var(--orange)); }
+.the-tag.purple { @include tagColor(#f9f0ff, var(--purple)); }
+.the-tag.cyan { @include tagColor(#e6fffb, var(--cyan)); }
+
+.shadow-text {
+  letter-spacing: 3px;
+  line-height: 24px;
+  font-size: 18px;
+  color: rgb(255, 255, 255);
+  text-shadow: var(--text-shadow-bg) 1px 1px, var(--text-shadow-bg) 1px -1px, var(--text-shadow-bg) -1px 1px, var(--text-shadow-bg) -1px -1px, var(--text-shadow-bg) 0px 1.4px, var(--text-shadow-bg) 0px -1.4px, var(--text-shadow-bg) -1.4px 0px, var(--text-shadow-bg) 1.4px 0px, var(--text-shadow-color) 2px 2px, var(--text-shadow-color) 3px 3px, var(--text-shadow-color) 3px 1px, var(--text-shadow-color) 1px 3px, var(--text-shadow-color) 1px 1px, var(--text-shadow-color) 2px 3.4px, var(--text-shadow-color) 2px 0.6px, var(--text-shadow-color) 0.6px 2px, var(--text-shadow-color) 3.4px 2px;
+  box-sizing: border-box;
+  font-style: italic;
+}
+
+.the-title {
+  @extend .shadow-text;
+  display: inline-block;
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #888;
+  }
+}
