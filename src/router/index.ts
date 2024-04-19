@@ -53,6 +53,30 @@ const add: Array<RouteItem> = [
     ],
   },
   {
+    path: "/admin/q",
+    name: "question",
+    component: Layout,
+    redirect: "/admin/question/manger",
+    meta: { title: "管理题目", icon: "svg-icon" },
+    children: [
+      {
+        path: "/admin/question/manger",
+        meta: { title: "管理题目", icon: "menu" },
+        component: () => import("@/views/backend/ManageQuestion.vue"),
+      },
+      {
+        path: "/admin/question/add",
+        meta: { title: "增加题目", icon: "svg-icon" },
+        component: () => import("@/views/backend/AddQuestion.vue"),
+      },
+      {
+        path: "/admin/question/update",
+        meta: { title: "更新题目", icon: "svg-icon" },
+        component: () => import("@/views/backend/AddQuestion.vue"),
+      },
+    ],
+  },
+  {
     path: "/icon",
     name: "icon",
     meta: { title: "图标栏目", auth: ["admin"] },

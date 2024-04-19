@@ -62,10 +62,9 @@ onMounted(() => {
       <div class="title">{{ question?.title }}</div>
       <hr />
       <div class="panel-content">
-        时间限制: {{ question?.judgeConfig!.timeLimit! / 1000 ?? 0 }}s
-        内存限制: {{ question?.judgeConfig!.memoryLimit! / 1000 ?? 0 }} MB
-        提交: {{question?.submitNum ?? 0}} 
-        解决: {{question?.acceptedNum ?? 0}} 
+        时间限制: {{ question?.judgeConfig!.timeLimit! / 1000 ?? 0 }}s 内存限制:
+        {{ question?.judgeConfig!.memoryLimit! / 1000 ?? 0 }} MB 提交:
+        {{ question?.submitNum ?? 0 }} 解决: {{ question?.acceptedNum ?? 0 }}
       </div>
       <div class="panel-body">
         <div class="panel_prob_header">
@@ -96,14 +95,18 @@ onMounted(() => {
           <div class="panel-title">样例输入</div>
           <button class="btn-copy">复制</button>
         </div>
-        <div class="panel-content">{{ question?.judgeCase![0].input }}</div>
+        <div class="panel-content">
+          <MdViewer :value="question?.judgeCase![0].input" />
+        </div>
       </div>
       <div class="panel-body">
         <div class="panel_prob_header">
           <div class="panel-title">样例输出</div>
           <button class="btn-copy">复制</button>
         </div>
-        <div class="panel-content">{{ question?.judgeCase![0].output }}</div>
+        <div class="panel-content">
+          <MdViewer :value="question?.judgeCase![0].output" />
+        </div>
       </div>
     </n-scrollbar>
   </div>
